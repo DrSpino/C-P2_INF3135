@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <jansson.h>
 
 #include "CUnit/Basic.h"
-#include "../src/readJson.c"
+#include "../src/readJson.h"
 
 /* Test Suite setup and cleanup functions: */
 
@@ -18,12 +19,17 @@ void cca3_test_1(void){
 	root = openJsonFile(text_root);
 
 	json_t *data;
-	data = getData(root,1);
+	data = getData(root,0);
 
 	const char *cca3_string = getCca3(data);
-	json_decref(root);
+   const char *string_test = "ABW";
 
-	CU_ASSERT_EQUAL(cca3_string, "AWB");
+   printf("\n%s\n",cca3_string );
+   printf("%s\n",string_test );
+
+	CU_ASSERT_TRUE(strcmp(cca3_string, string_test) == 0);
+
+   json_decref(root);
 }
 
 void cca3_test_2(void){
@@ -35,9 +41,11 @@ void cca3_test_2(void){
 	data = getData(root,1);
 
 	const char *cca3_string = getCca3(data);
-	json_decref(root);
+   const char *string_test = "ABW";
 
-	CU_ASSERT_NOT_EQUAL(cca3_string, "AWB");
+	CU_ASSERT_FALSE(strcmp(cca3_string, string_test) == 0);
+
+   json_decref(root);
 }
 
 

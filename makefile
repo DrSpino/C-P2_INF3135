@@ -1,20 +1,17 @@
 CC = gcc
 CFLAGS = -W -Wall -ljansson
-EXEC = src/tp2
+EXEC = bin/tp2
 TEST = test/tp2_test
-OBJ = src/tp2.c src/
+SRC = src/tp2.c src/readJson.h
 
-all: $(EXEC) #$(TEST)
-	@./$(EXEC) 
-
-$(EXEC): $(OBJ) src/readJson.c
+$(EXEC): $(SRC)
 	@$(CC) -o $@ $< $(CFLAGS)
 
 test: $(TEST)
 	@./$(TEST)
 
-$(TEST): test/tp2_test.c src/readJson.c
-	@$(CC) -o $@ $< -lcunit -ljansson
+$(TEST): test/tp2_test.c src/readJson.h
+	@$(CC) -o $@ $< $(CFLAGS) -lcunit
 
 clean:
 	rm -rf *.o $(TEST) $(EXEC)
