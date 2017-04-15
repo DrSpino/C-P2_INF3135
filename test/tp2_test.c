@@ -13,7 +13,8 @@ int clean_suite(void) { return 0; }
 
 /************* Test case functions ****************/
 
-void getCca3_test_true(void){
+void getCca3_test_true(void)
+{
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
@@ -29,7 +30,8 @@ void getCca3_test_true(void){
    json_decref(root);
 }
 
-void geCca3_test_false(void){
+void getCca3_test_false(void)
+{
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
@@ -45,7 +47,15 @@ void geCca3_test_false(void){
    json_decref(root);
 }
 
-void getCapital_test_true(void){
+void getCca3_test_null(void)
+{
+   const char *cca3_string = getCca3(NULL);
+
+   CU_ASSERT_PTR_NULL(cca3_string);
+}
+
+void getCapital_test_true(void)
+{
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
@@ -61,7 +71,8 @@ void getCapital_test_true(void){
    json_decref(root);
 }
 
-void getCapital_test_false(void){
+void getCapital_test_false(void)
+{
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
@@ -75,6 +86,66 @@ void getCapital_test_false(void){
    CU_ASSERT_FALSE(strcmp(capital_string, string_test) == 0);
 
    json_decref(root);
+}
+
+void getCapital_test_null(void)
+{
+   const char *capital_string = getCapital(NULL);
+
+   CU_ASSERT_PTR_NULL(capital_string);
+}
+
+void getLanguages_test_true(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data;
+   data = getData(root,2);
+
+   json_t *languages = getLanguages(data);
+
+   const char *string_test = "Portuguese";
+
+   const char *key;
+   json_t *value;
+   json_object_foreach(languages, key, value) 
+   {
+      CU_ASSERT_TRUE(strcmp(string_test, json_string_value(value)) == 0);
+   }
+
+   json_decref(root);
+}
+
+void getLanguages_test_false(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data;
+   data = getData(root,2);
+
+   json_t *languages = getLanguages(data);
+
+   const char *string_test = "English";
+
+   const char *key;
+   json_t *value;
+   json_object_foreach(languages, key, value) 
+   {
+      CU_ASSERT_TRUE(strcmp(string_test, json_string_value(value)) == 0);
+   }
+
+   json_decref(root);
+}
+
+void getLanguages_test_null(void)
+{
+   json_t *languages = getLanguages(NULL);
+
+   CU_ASSERT_PTR_NULL(languages);
 }
 
 
@@ -95,9 +166,14 @@ int main ( void )
 
    /* add the tests to the suite */
    if ( (NULL == CU_add_test(pSuite, "getCca3_test_true", getCca3_test_true)) ||
-         (NULL == CU_add_test(pSuite, "getCca3_test_true", getCca3_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getCca3_test_false", getCca3_test_false)) ||
+         (NULL == CU_add_test(pSuite, "getCca3_test_null", getCca3_test_null)) ||
          (NULL == CU_add_test(pSuite, "getCapital_test_true", getCapital_test_true)) ||
-         (NULL == CU_add_test(pSuite, "getCapital_test_false", getCapital_test_false))  
+         (NULL == CU_add_test(pSuite, "getCapital_test_false", getCapital_test_false)) ||
+         (NULL == CU_add_test(pSuite, "getCapital_test_null", getCapital_test_null)) ||
+         (NULL == CU_add_test(pSuite, "getLanguages_test_true", getLanguages_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getLanguages_test_false", getLanguages_test_false)) ||
+         (NULL == CU_add_test(pSuite, "getLanguages_test_null", getLanguages_test_null))
       )
    {
       CU_cleanup_registry();

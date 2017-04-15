@@ -8,10 +8,12 @@
 
 json_t * openJsonFile(char *text_root);
 json_t * getData(json_t *root, int index);
-const char * getCca3(json_t *data);
-const char * getCapital(json_t *data);
+const char *getCca3(json_t *data);
+const char *getCapital(json_t *data);
+json_t *getLanguages(json_t *data);
+json_t *getBorders(json_t *data);
 
-json_t * openJsonFile(char *text_root)
+json_t *openJsonFile(char *text_root)
 {
 	
 	json_error_t error;
@@ -33,7 +35,7 @@ json_t * openJsonFile(char *text_root)
 	return root;
 }
 
-json_t * getData(json_t *root, int index)
+json_t *getData(json_t *root, int index)
 {
 	json_t *data = json_array_get(root, index);
 
@@ -48,11 +50,9 @@ json_t * getData(json_t *root, int index)
 }
 
 /*Get des string du fichier JSON*/
-const char * getCca3(json_t *data)
+const char *getCca3(json_t *data)
 {
-	json_t *cca3;
-
-	cca3 = json_object_get(data, "cca3");
+	json_t *cca3 = json_object_get(data, "cca3");
 
 	if(!json_is_string(cca3))
 	{
@@ -63,11 +63,9 @@ const char * getCca3(json_t *data)
 	return json_string_value(cca3);
 }
 
-const char * getCapital(json_t *data)
+const char *getCapital(json_t *data)
 {
-	json_t *capital;
-
-	capital = json_object_get(data, "capital");
+	json_t *capital = json_object_get(data, "capital");
 
 	if(!json_is_string(capital))
 	{
@@ -76,4 +74,17 @@ const char * getCapital(json_t *data)
 	}
 
 	return json_string_value(capital);
+}
+
+json_t *getLanguages(json_t *data)
+{
+	json_t *languages = json_object_get(data, "languages");
+
+	if(!json_is_object(languages))
+	{
+		fprintf(stderr,"error: languages is not an object\n");
+		return NULL;
+	}
+
+	return languages;
 }

@@ -13,7 +13,7 @@ int main(void)
 	root = openJsonFile(text_root);
 
 	json_t *data;
-	data = getData(root,22);
+	data = getData(root,1);
 
 	/*Utilisation du getCca3 de readJson.h*/
 	const char *cca3 = getCca3(data);
@@ -21,11 +21,21 @@ int main(void)
 	{
 		printf("%s\n", cca3);
 	}
+
 	/*Utilisation du getCapital de readJson.h*/
 	const char *capital = getCapital(data);
 	if (capital != NULL)
 	{
 		printf("%s\n", capital);
+	}
+
+	/*Utilisation du getLanguages de readJson.h*/
+	json_t *languages = getLanguages(data);
+	const char *key;
+	json_t *value;
+	json_object_foreach(languages, key, value) 
+	{
+		printf("%s\n",json_string_value(value));
 	}
 
 
