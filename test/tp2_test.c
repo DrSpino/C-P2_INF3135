@@ -13,37 +13,66 @@ int clean_suite(void) { return 0; }
 
 /************* Test case functions ****************/
 
-void cca3_test_1(void){
-	json_t *root;
-	char *text_root = "data/countries.json";
-	root = openJsonFile(text_root);
+void getCca3_test_true(void){
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
 
-	json_t *data;
-	data = getData(root,0);
+   json_t *data;
+   data = getData(root,0);
 
-	const char *cca3_string = getCca3(data);
+   const char *cca3_string = getCca3(data);
    const char *string_test = "ABW";
 
-   printf("\n%s\n",cca3_string );
-   printf("%s\n",string_test );
-
-	CU_ASSERT_TRUE(strcmp(cca3_string, string_test) == 0);
+   CU_ASSERT_TRUE(strcmp(cca3_string, string_test) == 0);
 
    json_decref(root);
 }
 
-void cca3_test_2(void){
-	json_t *root;
-	char *text_root = "data/countries.json";
-	root = openJsonFile(text_root);
+void geCca3_test_false(void){
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
 
-	json_t *data;
-	data = getData(root,1);
+   json_t *data;
+   data = getData(root,1);
 
-	const char *cca3_string = getCca3(data);
+   const char *cca3_string = getCca3(data);
    const char *string_test = "ABW";
 
-	CU_ASSERT_FALSE(strcmp(cca3_string, string_test) == 0);
+   CU_ASSERT_FALSE(strcmp(cca3_string, string_test) == 0);
+
+   json_decref(root);
+}
+
+void getCapital_test_true(void){
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data;
+   data = getData(root,0);
+
+   const char *capital_string = getCapital(data);
+   const char *string_test = "Oranjestad";
+
+   CU_ASSERT_TRUE(strcmp(capital_string, string_test) == 0);
+
+   json_decref(root);
+}
+
+void getCapital_test_false(void){
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data;
+   data = getData(root,0);
+
+   const char *capital_string = getCapital(data);
+   const char *string_test = "Ottawa";
+   
+   CU_ASSERT_FALSE(strcmp(capital_string, string_test) == 0);
 
    json_decref(root);
 }
@@ -65,8 +94,10 @@ int main ( void )
    }
 
    /* add the tests to the suite */
-   if ( (NULL == CU_add_test(pSuite, "cca3_test_1", cca3_test_1)) ||
-        (NULL == CU_add_test(pSuite, "cca3_test_2", cca3_test_2)) 
+   if ( (NULL == CU_add_test(pSuite, "getCca3_test_true", getCca3_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getCca3_test_true", getCca3_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getCapital_test_true", getCapital_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getCapital_test_false", getCapital_test_false))  
       )
    {
       CU_cleanup_registry();

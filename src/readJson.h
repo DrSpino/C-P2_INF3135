@@ -1,3 +1,7 @@
+/* readJson.h est un fichier qui contient :
+ * -toutes les fonctions qui permettent d'ouvrir le fichier Json
+ * -les fonctions qui permettent d'extraire les valeurs du fichier Json
+ **/
 #include <stdlib.h>
 #include <stdio.h>
 #include <jansson.h>
@@ -5,6 +9,7 @@
 json_t * openJsonFile(char *text_root);
 json_t * getData(json_t *root, int index);
 const char * getCca3(json_t *data);
+const char * getCapital(json_t *data);
 
 json_t * openJsonFile(char *text_root)
 {
@@ -42,6 +47,7 @@ json_t * getData(json_t *root, int index)
 	return data;
 }
 
+/*Get des string du fichier JSON*/
 const char * getCca3(json_t *data)
 {
 	json_t *cca3;
@@ -50,15 +56,24 @@ const char * getCca3(json_t *data)
 
 	if(!json_is_string(cca3))
 	{
-		fprintf(stderr,"error: commit: cca3 is not a string\n");
-		exit(1);
+		fprintf(stderr,"error: cca3 is not a string\n");
+		return NULL;
 	}
 
-	const char *cca3_string;
+	return json_string_value(cca3);
+}
 
-	cca3_string = (char *) malloc(15);
+const char * getCapital(json_t *data)
+{
+	json_t *capital;
 
-	cca3_string = json_string_value(cca3);
+	capital = json_object_get(data, "capital");
 
-	return cca3_string;
+	if(!json_is_string(capital))
+	{
+		fprintf(stderr,"error: capital is not a string\n");
+		return NULL;
+	}
+
+	return json_string_value(capital);
 }

@@ -4,19 +4,8 @@
 
 #include "readJson.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
-	/* utilisé juste pour enlever les warning
-	 * du argc et argv non utilisé.
-	 */
-	if(argc < 1)
-	{
-		printf("error1");
-		exit(1);
-	}
-	char* arg1 = argv[1];
-	printf("%s\n",arg1);
-	/***** ******   *******  ****/
 
 	json_t *root;
 	char *text_root = "../data/countries.json";
@@ -24,11 +13,21 @@ int main(int argc, char *argv[])
 	root = openJsonFile(text_root);
 
 	json_t *data;
-	data = getData(root,0);
+	data = getData(root,22);
 
-	const char *cca3_string = getCca3(data);
+	/*Utilisation du getCca3 de readJson.h*/
+	const char *cca3 = getCca3(data);
+	if (cca3 != NULL)
+	{
+		printf("%s\n", cca3);
+	}
+	/*Utilisation du getCapital de readJson.h*/
+	const char *capital = getCapital(data);
+	if (capital != NULL)
+	{
+		printf("%s\n", capital);
+	}
 
-	printf("%s\n", cca3_string);
 
 	json_decref(root);
 
