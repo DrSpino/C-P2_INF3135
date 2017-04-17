@@ -1,4 +1,5 @@
-/* readJson.h est un fichier qui contient :
+/**
+ * readJson.h est un fichier qui contient :
  * -toutes les fonctions qui permettent d'ouvrir le fichier Json
  * -les fonctions qui permettent d'extraire les valeurs du fichier Json
  **/
@@ -8,6 +9,7 @@
 
 json_t * openJsonFile(char *text_root);
 json_t * getData(json_t *root, int index);
+const char *getName(json_t *data);
 const char *getCca3(json_t *data);
 const char *getCapital(json_t *data);
 json_t *getLanguages(json_t *data);
@@ -50,6 +52,20 @@ json_t *getData(json_t *root, int index)
 }
 
 /*Get des string du fichier JSON*/
+const char *getName(json_t *data)
+{
+	json_t *name = json_object_get(data, "name");
+	json_t *common_name = json_object_get(name, "common");
+
+	if(!json_is_string(common_name))
+	{
+		fprintf(stderr,"error: common name is not a string\n");
+		return NULL;
+	}
+
+	return json_string_value(common_name);
+}
+
 const char *getCca3(json_t *data)
 {
 	json_t *cca3 = json_object_get(data, "cca3");
@@ -87,4 +103,17 @@ json_t *getLanguages(json_t *data)
 	}
 
 	return languages;
+}
+
+json_t *getBorders(json_t *data)
+{
+	json_t *borders = json_object_get(data, "borders");
+	
+	if(!json_is_array(borders))
+	{
+		fprintf(stderr,"error: borders is not an array\n");
+		return NULL;
+	}
+
+	return borders;
 }
