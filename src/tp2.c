@@ -3,6 +3,7 @@
 #include <jansson.h>
 
 #include "readJson.h"
+#include "command.h"
 
 int main(void)
 {
@@ -57,6 +58,8 @@ int main(void)
 	}
 	printf("\n");
 
+	testCommand();
+	
 	json_decref(root);
 
 	return 0;
