@@ -17,8 +17,7 @@ int countryCommand(json_t *root, char *in)
     	*s = toupper((unsigned char) *s);
     	s++;
   	}
-
-	printf("%s\n", in );
+  	
 	int i;
 	for(i = 0; i < (int)json_array_size(root); i++)
 	{
