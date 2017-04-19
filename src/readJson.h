@@ -3,9 +3,6 @@
  * -toutes les fonctions qui permettent d'ouvrir le fichier Json
  * -les fonctions qui permettent d'extraire les valeurs du fichier Json
  **/
-#include <stdlib.h>
-#include <stdio.h>
-#include <jansson.h>
 
 json_t * openJsonFile(char *text_root);
 json_t * getData(json_t *root, int index);
@@ -24,14 +21,14 @@ json_t *openJsonFile(char *text_root)
 	if(!root)
 	{
 		fprintf(stderr,"error: wrong path\n");
-		exit(1);
+		return NULL;
 	}
 
 	if(!json_is_array(root))
 	{
 		fprintf(stderr,"error: root is not an array\n");
 		json_decref(root);
-		exit(1);
+		return NULL;
 	}
 
 	return root;
@@ -45,7 +42,7 @@ json_t *getData(json_t *root, int index)
 	{
 		fprintf(stderr,"error: data is not an object\n");
 		json_decref(root);
-		exit(1);
+		return NULL;
 	}
 
 	return data;
