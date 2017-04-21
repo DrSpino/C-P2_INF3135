@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 #include "readJson.h"
+#include "display.h"
 #include "command.h"
 
 

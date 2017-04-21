@@ -1,9 +1,9 @@
 /**
  * command.h est un fichier qui contient les fonctions de commandes.
  **/
-#define DISPLAY_INCLUDED
+//#define DISPLAY_INCLUDED
 
-#include "display.h"
+
 
 int countryCommand(json_t *root, char *in);
 void regionCommand(json_t *root, char* in,  char* argv[], int argc);
