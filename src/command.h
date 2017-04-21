@@ -1,7 +1,6 @@
 /**
  * command.h est un fichier qui contient les fonctions de commandes.
  **/
-//#define DISPLAY_INCLUDED
 
 
 

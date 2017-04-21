@@ -105,11 +105,16 @@ void displayBorders(json_t *data)
 {
 	printf("Borders : ");
 	json_t *borders = getBorders(data);
-
-	if (borders != NULL)
+	if(borders == NULL)
+	{
+	fprintf(stderr,"error: data.getBorders() fail \n");
+	exit(1);	
+	}
+	
+	if (json_array_size(borders) != 0)
 	{
 		int i;
-		for (i = 0; i < (int)json_array_size(borders) -1; i++)
+		for (i = 0; i < (int)json_array_size(borders)-1; i++)
 		{
 			printf("%s, ",json_string_value(json_array_get(borders,i)));
 		}
@@ -118,6 +123,6 @@ void displayBorders(json_t *data)
 		printf("\n");
 	}else
 	{
-		printf("NOT FOUND !\n");
+		printf("\n");
 	}
 }
