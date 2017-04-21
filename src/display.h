@@ -3,7 +3,6 @@
  **/
 
 void display(json_t *root, int index, char* argv[], int argc);
-
 void displayName(json_t *data);
 void displayCode(json_t *data);
 void displayCapital(json_t *data);
@@ -43,6 +42,7 @@ void display(json_t *root, int index, char* argv[], int argc)
 				}
 			}
 		}
+	 
 	}
 }
 
@@ -53,7 +53,8 @@ void displayName(json_t * data)
 	if (name != NULL)
 	{
 		printf("Name : %s\n", name);
-	}else{
+	}else
+	{
 		printf("Name : NOT FOUND !\n");
 	}
 }
@@ -73,7 +74,8 @@ void displayCapital(json_t *data)
 	if (capital != NULL)
 	{
 		printf("Capital : %s\n", capital);
-	}else{
+	}else
+	{
 		printf("Capital : NOT FOUND !\n");
 	}
 }
@@ -93,7 +95,8 @@ void displayLanguages(json_t *data)
 		}
 
 		printf("\n");
-	}else{
+	}else
+	{
 		printf("NOT FOUND !\n");
 	}
 }
@@ -113,7 +116,8 @@ void displayBorders(json_t *data)
 
 		printf("%s ",json_string_value(json_array_get(borders,i)));
 		printf("\n");
-	}else{
+	}else
+	{
 		printf("NOT FOUND !\n");
 	}
 }

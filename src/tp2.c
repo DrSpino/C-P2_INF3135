@@ -6,7 +6,8 @@
 
 #include "readJson.h"
 #include "command.h"
-#include "display.h"
+
+
 
 int main(int argc, char* argv[])
 {
@@ -29,6 +30,10 @@ int main(int argc, char* argv[])
 		{
 			index = countryCommand(root,argv[2]);
 			display(root, index, argv, argc);
+		}
+		else if(strcmp(argv[1], "--region") == 0)
+		{
+			regionCommand(root,argv[2], argv, argc);
 		}
 	}
 

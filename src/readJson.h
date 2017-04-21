@@ -9,6 +9,7 @@ json_t * getData(json_t *root, int index);
 const char *getName(json_t *data);
 const char *getCca3(json_t *data);
 const char *getCapital(json_t *data);
+const char *getRegion(json_t *data);
 json_t *getLanguages(json_t *data);
 json_t *getBorders(json_t *data);
 
@@ -87,6 +88,19 @@ const char *getCapital(json_t *data)
 	}
 
 	return json_string_value(capital);
+}
+
+const char *getRegion(json_t *data)
+{
+	json_t *region = json_object_get(data, "region");
+
+	if(!json_is_string(region))
+	{
+		fprintf(stderr,"error: region is not a string\n");
+		return NULL;
+	}
+
+	return json_string_value(region);
 }
 
 json_t *getLanguages(json_t *data)
