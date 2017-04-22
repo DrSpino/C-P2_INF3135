@@ -5,7 +5,7 @@
 
 
 int countryCommand(json_t *root, char *in);
-void regionCommand(json_t *root, char* in,  char* argv[], int argc);
+int regionCommand(json_t *root, char* in,  char* argv[], int argc);
 
 const char *regionArray[] = {"Africa","Americas","Asia","Europe","Oceania"};
 
@@ -13,12 +13,13 @@ int countryCommand(json_t *root, char *in)
 {
 	if(in == NULL)
 	{
-		fprintf(stderr, "the country code is not a string \n");
+		fprintf(stderr, "error : the country code is not a string \n");
 		return -1;
 	}
 	
 	char *s = in;
-  	while (*s) {
+  	while (*s) 
+	{
     	*s = toupper((unsigned char) *s);
     	s++;
   	}
@@ -40,12 +41,12 @@ int countryCommand(json_t *root, char *in)
 	return -2;
 }
 
-void regionCommand(json_t *root, char* in,  char* argv[], int argc){
+int regionCommand(json_t *root, char* in,  char* argv[], int argc){
 
 			if(in == NULL)
 			{
-			fprintf(stderr,"error: argv[2] null \n");
-			exit(1);	
+			fprintf(stderr,"error: the country code is not a string \n");
+			return -1;	
 			}
 			
 			/* oceania --> Oceania */
@@ -77,8 +78,10 @@ void regionCommand(json_t *root, char* in,  char* argv[], int argc){
 			/* validate the region inside the regionArray */
 			if(regionObtainedValid)
 			{
-			fprintf(stderr,"error: the region must be between [africa,americas,asia,europe,oceania]\n");
-			exit(2);	
+				return -2;	
+			}else
+			{
+				return 1;
 			}
 			
 }
