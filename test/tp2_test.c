@@ -2,9 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <jansson.h>
+#include <ctype.h>
+
 
 #include "CUnit/Basic.h"
 #include "../src/readJson.h"
+#include "../src/display.h"
+#include "../src/command.h"
+
 
 /* Test Suite setup and cleanup functions: */
 
@@ -135,6 +140,47 @@ void getCapital_test_null(void)
    CU_ASSERT_PTR_NULL(capital_string);
 }
 
+void getRegion_test_true(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data;
+   data = getData(root,0);
+
+   const char *region_string = getRegion(data);
+   const char *string_test = "Americas";
+
+   CU_ASSERT_TRUE(strcmp(region_string, string_test) == 0);
+
+   json_decref(root);
+}
+
+void getRegion_test_false(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data;
+   data = getData(root,0);
+
+   const char *region_string = getRegion(data);
+   const char *string_test = "Asia";
+   
+   CU_ASSERT_FALSE(strcmp(region_string, string_test) == 0);
+
+   json_decref(root);
+}
+
+void getRegion_test_null(void)
+{
+   const char *region_string = getRegion(NULL);
+
+   CU_ASSERT_PTR_NULL(region_string);
+}
+
 void getLanguages_test_true(void)
 {
    json_t *root;
@@ -229,6 +275,47 @@ void getBorders_test_null(void)
    CU_ASSERT_PTR_NULL(borders);
 }
 
+void countryCommand_test_true(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   char in [] = "abw";
+   int index = countryCommand(root, in);
+
+   CU_ASSERT_TRUE(index == 0);
+
+   json_decref(root);
+}
+
+void countryCommand_test_false(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   char in [] = "abw";
+   int index = countryCommand(root, in);
+
+   CU_ASSERT_FALSE(index == 7);
+
+   json_decref(root);
+}
+
+void countryCommand_test_null(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   int index = countryCommand(root, NULL);
+
+   CU_ASSERT_TRUE(index == -1);
+
+   json_decref(root);
+}
+
 int main ( void )
 {
    CU_pSuite pSuite = NULL;
@@ -254,12 +341,18 @@ int main ( void )
          (NULL == CU_add_test(pSuite, "getCapital_test_true", getCapital_test_true)) ||
          (NULL == CU_add_test(pSuite, "getCapital_test_false", getCapital_test_false)) ||
          (NULL == CU_add_test(pSuite, "getCapital_test_null", getCapital_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "getRegion_test_true", getRegion_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getRegion_test_false", getRegion_test_false)) ||
+         (NULL == CU_add_test(pSuite, "getRegion_test_null", getRegion_test_null)) ||
          (NULL == CU_add_test(pSuite, "getLanguages_test_true", getLanguages_test_true)) ||
          (NULL == CU_add_test(pSuite, "getLanguages_test_false", getLanguages_test_false)) ||
          (NULL == CU_add_test(pSuite, "getLanguages_test_null", getLanguages_test_null)) ||
-         (NULL == CU_add_test(pSuite, "getBorders_test_null", getBorders_test_true)) ||
-         (NULL == CU_add_test(pSuite, "ggetBorders_test_null", getBorders_test_false)) ||
-         (NULL == CU_add_test(pSuite, "getBorders_test_null", getBorders_test_null))
+         (NULL == CU_add_test(pSuite, "getBorders_test_true", getBorders_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getBorders_test_false", getBorders_test_false)) ||
+         (NULL == CU_add_test(pSuite, "getBorders_test_null", getBorders_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "countryCommand_test_true", countryCommand_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "countryCommand_test_false", countryCommand_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "countryCommand_test_null", countryCommand_test_null))
       )
    {
       CU_cleanup_registry();

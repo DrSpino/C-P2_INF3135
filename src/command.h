@@ -13,10 +13,10 @@ int countryCommand(json_t *root, char *in)
 {
 	if(in == NULL)
 	{
-		fprintf(stderr, "argv[2] null");
+		fprintf(stderr, "the country code is not a string \n");
 		return -1;
 	}
-
+	
 	char *s = in;
   	while (*s) {
     	*s = toupper((unsigned char) *s);

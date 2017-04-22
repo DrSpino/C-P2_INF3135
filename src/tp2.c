@@ -29,7 +29,9 @@ int main(int argc, char* argv[])
 	{
 		if(strcmp(argv[1], "--country") == 0)
 		{
-			index = countryCommand(root,argv[2]);
+			char countryCode[4];
+			strcpy(countryCode,argv[2]);
+			index = countryCommand(root,countryCode);
 			display(root, index, argv, argc);
 		}
 		else if(strcmp(argv[1], "--region") == 0)

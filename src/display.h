@@ -42,7 +42,6 @@ void display(json_t *root, int index, char* argv[], int argc)
 				}
 			}
 		}
-	 
 	}
 }
 
