@@ -5,7 +5,7 @@
 
 
 int countryCommand(json_t *root, char *in);
-int regionCommand(json_t *root, char* in,  char* argv[], int argc);
+int regionCommand(json_t *root, char* in,  char* argv[], int argc, int affichage);
 
 const char *regionArray[] = {"Africa","Americas","Asia","Europe","Oceania"};
 
@@ -41,47 +41,48 @@ int countryCommand(json_t *root, char *in)
 	return -2;
 }
 
-int regionCommand(json_t *root, char* in,  char* argv[], int argc){
+int regionCommand(json_t *root, char* in,  char* argv[], int argc, int affichage)
+{
 
-			if(in == NULL)
-			{
-			fprintf(stderr,"error: the country code is not a string \n");
-			return -1;	
-			}
+	if(in == NULL)
+	{
+	fprintf(stderr,"error: the country code is not a string \n");
+	return -1;	
+	}
+				
+	/* oceania --> Oceania */
+	char *region = in;
+	region[0] = toupper(region[0]);
 			
-			/* oceania --> Oceania */
-			char *region = in;
-			region[0] = toupper(region[0]);
-			
-			int j;
-			int regionObtainedValid = 1;
-			for(j=0; j< 5; j++)
+	int j;
+	int regionObtainedValid = 1;
+	for(j=0; j< 5; j++)
+	{
+		if(strcmp(region, regionArray[j]) == 0)
+		{
+			regionObtainedValid--;
+			int i;
+			/* display each data if data.getRegion equals region)*/
+			for(i = 0; i < (int)json_array_size(root); i++)
 			{
-				if(strcmp(region, regionArray[j]) == 0)
-				{
-					regionObtainedValid--;
-					int i;
-					/* display each data if data.getRegion equals region)*/
-					for(i = 0; i < (int)json_array_size(root); i++)
+				json_t *data;
+				data = getData(root,i);
+				const char *regionObtained = getRegion(data);
+					if(strcmp(region,regionObtained) == 0 && affichage == 0)
 					{
-						json_t *data;
-						data = getData(root,i);
-						const char *regionObtained = getRegion(data);
-							if(strcmp(region,regionObtained) == 0)
-							{
-								display(root, i, argv, argc);
-								printf("\n");
-							}
+						display(root, i, argv, argc);
+						printf("\n");
 					}
-				}
 			}
-			/* validate the region inside the regionArray */
-			if(regionObtainedValid)
-			{
-				return -2;	
-			}else
-			{
-				return 1;
-			}
+		}
+	}
+	/* validate the region inside the regionArray */
+	if(regionObtainedValid)
+	{
+		return -2;	
+	}else
+	{
+		return 0;
+	}
 			
 }

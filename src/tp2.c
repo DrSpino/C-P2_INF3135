@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 		{
 			char countryCode[4];
 			strcpy(countryCode,argv[2]);
-			int result = regionCommand(root,countryCode, argv, argc);
+			int result = regionCommand(root,countryCode, argv, argc, 0);
 			if(result == -2){
 				fprintf(stderr,"error: the region must be between [africa,americas,asia,europe,oceania]\n");
 			}

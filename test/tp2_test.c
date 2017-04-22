@@ -316,7 +316,7 @@ void countryCommand_test_null(void)
    json_decref(root);
 }
 
-/*
+
 void regionCommand_test_true(void)
 {
    json_t *root;
@@ -324,13 +324,13 @@ void regionCommand_test_true(void)
    root = openJsonFile(text_root);
    char* argv[] = {"","--region","americas"};
      char in [] = "americas";
-	 int result = regionCommand(root, in, argv, 3);
+	 int result = regionCommand(root, in, argv, 3, -1);
  
-   CU_ASSERT_TRUE(result == 1);
+   CU_ASSERT_TRUE(result == 0);
 
    json_decref(root);
 }
-*/ 
+
 
 void regionCommand_test_false(void)
 {
@@ -339,9 +339,9 @@ void regionCommand_test_false(void)
    root = openJsonFile(text_root);
    char* argv[] = {"","--region","americas"};
    char in [] = "ASIA";
-   int result = regionCommand(root, in, argv, 3);
+   int result = regionCommand(root, in, argv, 3, -1);
 
-   CU_ASSERT_FALSE(result == 1);
+   CU_ASSERT_TRUE(result == -2);
 
    json_decref(root);
 }
@@ -352,7 +352,7 @@ void regionCommand_test_null(void)
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
 char* argv[] = {"","--region","americas"};
-   int result = regionCommand(root, NULL, argv, 3);
+   int result = regionCommand(root, NULL, argv, 3, -1);
 
    CU_ASSERT_TRUE(result == -1);
 
@@ -396,7 +396,7 @@ int main ( void )
 		 (NULL == CU_add_test(pSuite, "countryCommand_test_true", countryCommand_test_true)) ||
 		 (NULL == CU_add_test(pSuite, "countryCommand_test_false", countryCommand_test_false)) ||
 		 (NULL == CU_add_test(pSuite, "countryCommand_test_null", countryCommand_test_null)) ||
-		// (NULL == CU_add_test(pSuite, "regionCommand_test_true", regionCommand_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "regionCommand_test_true", regionCommand_test_true)) ||
 		 (NULL == CU_add_test(pSuite, "regionCommand_test_false", regionCommand_test_false)) ||
 		 (NULL == CU_add_test(pSuite, "regionCommand_test_null", regionCommand_test_null))
 	  )
