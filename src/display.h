@@ -48,14 +48,14 @@ void display(json_t *root, int index, char* argv[], int argc)
 
 void displayName(json_t * data)
 {
+	printf("Name : ");
 	const char *name = getName(data);
 	if (name != NULL)
 	{
-		printf("Name : %s\n", name);
-	}else
-	{
-		printf("Name : NOT FOUND !\n");
+		printf("%s", name);
 	}
+
+	printf("\n");
 }
 
 void displayCode(json_t *data)
@@ -69,15 +69,16 @@ void displayCode(json_t *data)
 
 void displayCapital(json_t *data)
 {
+	printf("Capital : ");
 	const char *capital = getCapital(data);
 	if (capital != NULL)
 	{
-		printf("Capital : %s\n", capital);
-	}else
-	{
-		printf("Capital : NOT FOUND !\n");
+		printf("%s", capital);
 	}
+
+	printf("\n");
 }
+
 
 void displayLanguages(json_t *data)
 {
@@ -92,36 +93,28 @@ void displayLanguages(json_t *data)
 		{
 			printf("%s, ",json_string_value(value));
 		}
-
-		printf("\n");
-	}else
-	{
-		printf("NOT FOUND !\n");
 	}
+
+	printf("\n");
 }
 
 void displayBorders(json_t *data)
 {
 	printf("Borders : ");
 	json_t *borders = getBorders(data);
-	if(borders == NULL)
+	if(borders != NULL)
 	{
-	fprintf(stderr,"error: data.getBorders() fail \n");
-	exit(1);	
-	}
-	
-	if (json_array_size(borders) != 0)
-	{
-		int i;
-		for (i = 0; i < (int)json_array_size(borders)-1; i++)
+		if (json_array_size(borders) != 0)
 		{
-			printf("%s, ",json_string_value(json_array_get(borders,i)));
+			int i;
+			for (i = 0; i < (int)json_array_size(borders)-1; i++)
+			{
+				printf("%s, ",json_string_value(json_array_get(borders,i)));
+			}
+
+			printf("%s ",json_string_value(json_array_get(borders,i)));
 		}
 
-		printf("%s ",json_string_value(json_array_get(borders,i)));
-		printf("\n");
-	}else
-	{
 		printf("\n");
 	}
 }

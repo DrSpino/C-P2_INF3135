@@ -6,6 +6,9 @@
 
 int countryCommand(json_t *root, char *in);
 int regionCommand(json_t *root, char* in,  char* argv[], int argc, int affichage);
+int sameLanguageCommand(json_t *root, char* argv[], int argc);
+int sameLanguage2(json_t *c1, json_t *c2);
+int sameLanguage3(json_t *c1, json_t *c2, json_t *c3);
 
 const char *regionArray[] = {"Africa","Americas","Asia","Europe","Oceania"};
 
@@ -85,4 +88,125 @@ int regionCommand(json_t *root, char* in,  char* argv[], int argc, int affichage
 		return 0;
 	}
 			
+}
+
+int sameLanguageCommand(json_t *root, char* argv[],int argc)
+{
+	int result = 0;
+
+	if(argc < 4 || argc > 5)
+	{
+		fprintf(stderr,"number of argument invalid for command --same.");
+		return -1;
+	}
+	
+	if(argc == 4 || argc == 5)
+	{
+		char countryCode[4];
+
+		strcpy(countryCode,argv[2]);
+		json_t *c1 = getLanguages(
+						getData(root, 
+							countryCommand(root, countryCode)));
+
+		strcpy(countryCode,argv[3]);
+		json_t *c2 = getLanguages(
+						getData(root, 
+							countryCommand(root, countryCode)));
+
+		if(argc == 5)
+		{
+			strcpy(countryCode,argv[4]);
+			json_t *c3 = getLanguages(
+							getData(root, 
+								countryCommand(root, countryCode)));
+
+			result = sameLanguage3(c1, c2, c3);
+		}
+		else
+		{
+			result = sameLanguage2(c1, c2);
+		}
+		
+	}
+
+	return result;
+}
+
+int sameLanguage2(json_t *c1, json_t *c2)
+{
+	int result = 0;
+
+	if(c1 == NULL || c2 == NULL)
+	{
+		return -1;
+	}
+	
+	const char *key1;
+	json_t *val1;
+	json_object_foreach(c1, key1, val1) 
+	{
+		const char *key2;
+		json_t *val2;
+		json_object_foreach(c2, key2, val2) 
+		{	
+			if(strcmp(json_string_value(val1), json_string_value(val2)) == 0)
+			{
+				if(result == 0)
+				{
+					printf("yes %s",json_string_value(val1));
+					result = 1;
+				}
+				else
+				{
+					printf(" %s",json_string_value(val1));
+				}
+			}
+		}
+	}
+
+	printf("\n");
+	return result;
+}
+
+int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
+{
+	int result = 0;
+
+	if(c1 == NULL || c2 == NULL || c3 == NULL)
+	{
+		return -1;
+	}
+	
+	const char *key1;
+	json_t *val1;
+	json_object_foreach(c1, key1, val1) 
+	{
+		const char *key2;
+		json_t *val2;
+		json_object_foreach(c2, key2, val2) 
+		{	
+			const char *key3;
+			json_t *val3;
+			json_object_foreach(c3, key3, val3) 
+			{	
+				if((strcmp(json_string_value(val1), json_string_value(val2)) == 0) &&
+					(strcmp(json_string_value(val2), json_string_value(val3)) == 0))
+				{
+					if(result == 0)
+					{
+						printf("yes %s",json_string_value(val1));
+						result = 1;
+					}
+					else
+					{
+						printf(" %s",json_string_value(val1));
+					}
+				}
+			}
+		}
+	}
+
+	printf("\n");
+	return result;
 }

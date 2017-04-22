@@ -24,23 +24,31 @@ int main(int argc, char* argv[])
 	
 	root = openJsonFile(text_root);
 
-	int index = -1;
 	if(root != NULL)
 	{
 		if(strcmp(argv[1], "--country") == 0)
 		{
 			char countryCode[4];
 			strcpy(countryCode,argv[2]);
-			index = countryCommand(root,countryCode);
-			display(root, index, argv, argc);
+			int result = countryCommand(root,countryCode);
+			display(root, result, argv, argc);
 		}
 		else if(strcmp(argv[1], "--region") == 0)
 		{
 			char countryCode[4];
 			strcpy(countryCode,argv[2]);
 			int result = regionCommand(root,countryCode, argv, argc, 0);
-			if(result == -2){
+			if(result == -2)
+			{
 				fprintf(stderr,"error: the region must be between [africa,americas,asia,europe,oceania]\n");
+			}
+		}
+		else if(strcmp(argv[1], "--same-language") == 0)
+		{
+			int result = sameLanguageCommand(root, argv, argc);
+			if(result == 0)
+			{
+				printf("no\n");
 			}
 		}
 	}
