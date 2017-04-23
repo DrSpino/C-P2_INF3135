@@ -28,9 +28,7 @@ int main(int argc, char* argv[])
 	{
 		if(strcmp(argv[1], "--country") == 0)
 		{
-			char countryCode[4];
-			strcpy(countryCode,argv[2]);
-			int result = countryCommand(root,countryCode);
+			int result = countryCommand(root,argv[2]);
 			display(root, result, argv, argc);
 		}
 		else if(strcmp(argv[1], "--region") == 0)
@@ -44,7 +42,7 @@ int main(int argc, char* argv[])
 		else if(strcmp(argv[1], "--same-language") == 0)
 		{
 			int result = sameLanguageCommand(root, argv, argc);
-			if(result == 0)
+			if(result == 1)
 			{
 				printf("no\n");
 			}

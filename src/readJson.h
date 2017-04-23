@@ -3,7 +3,6 @@
  * -toutes les fonctions qui permettent d'ouvrir le fichier Json
  * -les fonctions qui permettent d'extraire les valeurs du fichier Json
  **/
-
 json_t * openJsonFile(char *text_root);
 json_t * getData(json_t *root, int index);
 const char *getName(json_t *data);
@@ -15,7 +14,6 @@ json_t *getBorders(json_t *data);
 
 json_t *openJsonFile(char *text_root)
 {
-	
 	json_error_t error;
 	json_t *root = json_load_file(text_root, 0, &error);
 
@@ -41,7 +39,6 @@ json_t *getData(json_t *root, int index)
 
 	if(!json_is_object(data))
 	{
-		fprintf(stderr,"error: data is not an object\n");
 		json_decref(root);
 		return NULL;
 	}
@@ -57,7 +54,6 @@ const char *getName(json_t *data)
 
 	if(!json_is_string(common_name))
 	{
-		fprintf(stderr,"error: common name is not a string\n");
 		return NULL;
 	}
 
@@ -70,7 +66,6 @@ const char *getCca3(json_t *data)
 
 	if(!json_is_string(cca3))
 	{
-		fprintf(stderr,"error: cca3 is not a string\n");
 		return NULL;
 	}
 
@@ -83,7 +78,6 @@ const char *getCapital(json_t *data)
 
 	if(!json_is_string(capital))
 	{
-		fprintf(stderr,"error: capital is not a string\n");
 		return NULL;
 	}
 
@@ -96,7 +90,6 @@ const char *getRegion(json_t *data)
 
 	if(!json_is_string(region))
 	{
-		fprintf(stderr,"error: region is not a string\n");
 		return NULL;
 	}
 
@@ -109,7 +102,6 @@ json_t *getLanguages(json_t *data)
 
 	if(!json_is_object(languages))
 	{
-		fprintf(stderr,"error: languages is not an object\n");
 		return NULL;
 	}
 
@@ -122,7 +114,6 @@ json_t *getBorders(json_t *data)
 	
 	if(!json_is_array(borders))
 	{
-		fprintf(stderr,"error: borders is not an array\n");
 		return NULL;
 	}
 

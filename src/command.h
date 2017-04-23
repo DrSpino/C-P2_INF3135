@@ -16,7 +16,7 @@ int countryCommand(json_t *root, char *in)
 {
 	if(in == NULL)
 	{
-		fprintf(stderr, "error : the country code is not a string \n");
+		fprintf(stderr, "error : country argument invalid\n");
 		return -1;
 	}
 	
@@ -30,8 +30,7 @@ int countryCommand(json_t *root, char *in)
 	int i;
 	for(i = 0; i < (int)json_array_size(root); i++)
 	{
-		json_t *data;
-		data = getData(root,i);
+		json_t *data = getData(root,i);
 		const char *cca3 = getCca3(data);
 
 		if (cca3 != NULL && strcmp(in, cca3) == 0)
@@ -50,8 +49,8 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 
 	if(argv[2] == NULL)
 	{
-	fprintf(stderr,"error: the country code is not a string \n");
-	return -1;	
+		fprintf(stderr,"error: the country code is not a string \n");
+		return -1;	
 	}
 		
 	char regionCode[4];
@@ -102,35 +101,26 @@ int sameLanguageCommand(json_t *root, char* argv[],int argc)
 		fprintf(stderr,"number of argument invalid for command --same.\n");
 		return -1;
 	}
-	
-	if(argc == 4 || argc == 5)
+
+	json_t *c1 = getLanguages(
+					getData(root, 
+						countryCommand(root, argv[2])));
+
+	json_t *c2 = getLanguages(
+						getData(root, 
+							countryCommand(root, argv[3])));
+
+	if(argc == 5)
 	{
-		char countryCode[4];
-
-		strcpy(countryCode,argv[2]);
-		json_t *c1 = getLanguages(
+		json_t *c3 = getLanguages(
 						getData(root, 
-							countryCommand(root, countryCode)));
+							countryCommand(root, argv[4])));
 
-		strcpy(countryCode,argv[3]);
-		json_t *c2 = getLanguages(
-						getData(root, 
-							countryCommand(root, countryCode)));
-
-		if(argc == 5)
-		{
-			strcpy(countryCode,argv[4]);
-			json_t *c3 = getLanguages(
-							getData(root, 
-								countryCommand(root, countryCode)));
-
-			result = sameLanguage3(c1, c2, c3);
-		}
-		else
-		{
-			result = sameLanguage2(c1, c2);
-		}
-		
+		result = sameLanguage3(c1, c2, c3);
+	}
+	else
+	{
+		result = sameLanguage2(c1, c2);
 	}
 
 	return result;
@@ -138,7 +128,7 @@ int sameLanguageCommand(json_t *root, char* argv[],int argc)
 
 int sameLanguage2(json_t *c1, json_t *c2)
 {
-	int result = 0;
+	int result = 1;
 
 	if(c1 == NULL || c2 == NULL)
 	{
@@ -155,10 +145,10 @@ int sameLanguage2(json_t *c1, json_t *c2)
 		{	
 			if(strcmp(json_string_value(val1), json_string_value(val2)) == 0)
 			{
-				if(result == 0)
+				if(result == 1)
 				{
 					printf("yes %s",json_string_value(val1));
-					result = 1;
+					result = 0;
 				}
 				else
 				{
@@ -168,13 +158,17 @@ int sameLanguage2(json_t *c1, json_t *c2)
 		}
 	}
 
-	printf("\n");
+	if(result == 0)
+	{
+		printf("\n");
+	}
+
 	return result;
 }
 
 int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
 {
-	int result = 0;
+	int result = 1;
 
 	if(c1 == NULL || c2 == NULL || c3 == NULL)
 	{
@@ -196,10 +190,10 @@ int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
 				if((strcmp(json_string_value(val1), json_string_value(val2)) == 0) &&
 					(strcmp(json_string_value(val2), json_string_value(val3)) == 0))
 				{
-					if(result == 0)
+					if(result == 1)
 					{
 						printf("yes %s",json_string_value(val1));
-						result = 1;
+						result = 0;
 					}
 					else
 					{
@@ -210,6 +204,10 @@ int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
 		}
 	}
 
-	printf("\n");
+	if(result == 0)
+	{
+		printf("\n");
+	}
+
 	return result;
 }
