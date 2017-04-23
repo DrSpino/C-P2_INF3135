@@ -102,10 +102,17 @@ int sameLanguageCommand(json_t *root, char* argv[],int argc)
 		return -1;
 	}
 
+	if(countryCommand(root, argv[2]) == -2){
+		return -2;
+	}				
 	json_t *c1 = getLanguages(
 					getData(root, 
 						countryCommand(root, argv[2])));
 
+		
+	if(countryCommand(root, argv[3]) == -2){
+		return -2;
+	}					
 	json_t *c2 = getLanguages(
 						getData(root, 
 							countryCommand(root, argv[3])));
