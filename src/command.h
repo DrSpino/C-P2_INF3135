@@ -96,7 +96,7 @@ int sameLanguageCommand(json_t *root, char* argv[],int argc)
 
 	if(argc < 4 || argc > 5)
 	{
-		fprintf(stderr,"number of argument invalid for command --same.");
+		fprintf(stderr,"number of argument invalid for command --same.\n");
 		return -1;
 	}
 	

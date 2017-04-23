@@ -51,6 +51,9 @@ int main(int argc, char* argv[])
 				printf("no\n");
 			}
 		}
+		else{
+			fprintf(stderr,"error: command invalid \n");
+		}
 	}
 
 	json_decref(root);
