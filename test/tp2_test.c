@@ -323,8 +323,7 @@ void regionCommand_test_true(void)
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
    char* argv[] = {"","--region","americas"};
-     char in [] = "americas";
-	 int result = regionCommand(root, in, argv, 3, -1);
+	 int result = regionCommand(root, argv, 3, -1);
  
    CU_ASSERT_TRUE(result == 0);
 
@@ -337,9 +336,8 @@ void regionCommand_test_false(void)
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
-   char* argv[] = {"","--region","americas"};
-   char in [] = "ASIA";
-   int result = regionCommand(root, in, argv, 3, -1);
+   char* argv[] = {"","--region","ASIA"};
+   int result = regionCommand(root, argv, 3, -1);
 
    CU_ASSERT_TRUE(result == -2);
 
@@ -351,8 +349,8 @@ void regionCommand_test_null(void)
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
-char* argv[] = {"","--region","americas"};
-   int result = regionCommand(root, NULL, argv, 3, -1);
+   char* argv[] = {"","--region",NULL};
+   int result = regionCommand(root, argv, 0, -1);
 
    CU_ASSERT_TRUE(result == -1);
 

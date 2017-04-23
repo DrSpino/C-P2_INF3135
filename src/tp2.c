@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 	if(argc < 2 || argc > 6)
 	{
 		fprintf(stderr,"error: the number of arguments must be between 1 and 5 \n");
-		exit(1);
+		return -1;
 	}
 	
 	json_t *root;
@@ -35,9 +35,7 @@ int main(int argc, char* argv[])
 		}
 		else if(strcmp(argv[1], "--region") == 0)
 		{
-			char countryCode[4];
-			strcpy(countryCode,argv[2]);
-			int result = regionCommand(root,countryCode, argv, argc, 0);
+			int result = regionCommand(root, argv, argc, 0);
 			if(result == -2)
 			{
 				fprintf(stderr,"error: the region must be between [africa,americas,asia,europe,oceania]\n");

@@ -5,7 +5,7 @@
 
 
 int countryCommand(json_t *root, char *in);
-int regionCommand(json_t *root, char* in,  char* argv[], int argc, int affichage);
+int regionCommand(json_t *root,  char* argv[], int argc, int affichage);
 int sameLanguageCommand(json_t *root, char* argv[], int argc);
 int sameLanguage2(json_t *c1, json_t *c2);
 int sameLanguage3(json_t *c1, json_t *c2, json_t *c3);
@@ -44,17 +44,20 @@ int countryCommand(json_t *root, char *in)
 	return -2;
 }
 
-int regionCommand(json_t *root, char* in,  char* argv[], int argc, int affichage)
+int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 {
+	
 
-	if(in == NULL)
+	if(argv[2] == NULL)
 	{
 	fprintf(stderr,"error: the country code is not a string \n");
 	return -1;	
 	}
-				
+		
+	char regionCode[4];
+	strcpy(regionCode,argv[2]);
 	/* oceania --> Oceania */
-	char *region = in;
+	char *region = regionCode;
 	region[0] = toupper(region[0]);
 			
 	int j;
