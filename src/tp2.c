@@ -8,8 +8,6 @@
 #include "display.h"
 #include "command.h"
 
-
-
 int main(int argc, char* argv[])
 {
 	
