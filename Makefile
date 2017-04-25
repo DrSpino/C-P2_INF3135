@@ -17,8 +17,10 @@ src/tp2.o: src/readJson.h src/command.h src/display.h
 test: $(TEST)
 	@./$(TEST)
 
-$(TEST): test/tp2_test.c src/readJson.h src/command.h src/display.h
-	@$(CC) -o $@ $< $(CFLAGS) -lcunit
+$(TEST): src/readJson.o src/command.o src/display.o test/tp2_test.o
+	@$(CC) -o $@ $^ $(LDFLAGS) -lcunit
+
+test/tp2_test.o: src/readJson.h src/command.h src/display.h
 
 clean:
 	rm -rf src/*.o $(TEST) $(EXEC)
