@@ -213,3 +213,93 @@ int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
 
 	return result;
 }
+
+int sameBordersCommand(json_t *root, char* argv[],int argc)
+{
+	int result = 0; 
+	if(argc < 4 || argc > 5)
+	{
+		fprintf(stderr,"number of argument invalid for command --same.\n");
+		return -1;
+	}
+	
+	if(countryCommand(root, argv[2]) == -2 || countryCommand(root, argv[3]) == -2){
+		return -2;
+	}
+	json_t *c1_data = getData(root, countryCommand(root, argv[2]));
+	json_t *c1 = getBorders(c1_data);
+	char pays1[3];
+	strcpy(pays1, getCca3(c1_data)); 
+	
+	json_t *c2_data = getData(root, countryCommand(root, argv[3]));
+	json_t *c2 = getBorders(c2_data);
+	char pays2[3];
+	strcpy(pays2, getCca3(c2_data));
+	
+	if(argc == 5)
+	{
+		if(countryCommand(root, argv[4]) == -2)
+		{
+			return -2;
+		}
+	    json_t *c3_data = getData(root, countryCommand(root, argv[4]));
+		json_t *c3 = getBorders(c3_data);
+		char pays3[3];
+		strcpy(pays3, getCca3(c3_data)); 
+		
+		result = sameBorder3(c1, c2, c3, pays1, pays2, pays3);
+	}
+	else		
+	{
+		result = sameBorder2(c1, c2, pays1, pays2);
+	}
+
+	return result;
+}
+
+int sameBorder2(json_t *c1, json_t *c2, char* pays1, char* pays2)
+{
+	int result = 1;
+
+	if(c1 == NULL || c2 == NULL)
+	{
+		return -1;
+	}
+	
+	size_t index1 = json_array_size(c1); 
+	json_t *val1;
+	json_array_foreach(c1, index1, val1) 
+	{
+		size_t index2 = json_array_size(c2);
+		json_t *val2;
+		json_array_foreach(c2, index2, val2) 
+		{	
+			int cmp_pays1_c2 = strcmp(pays1, json_string_value(val2));
+			int cmp_pays2_c1 = strcmp(pays2, json_string_value(val1));
+			if((cmp_pays1_c2 == 0 && cmp_pays2_c1 == 0) && result == 1) 
+			{
+				result = 0;
+			}
+		}
+	}
+	return result;
+}
+
+int sameBorder3(json_t *c1, json_t *c2, json_t *c3, char* pays1, char* pays2, char* pays3)
+{
+	int result = 1;
+	if(c1 == NULL || c2 == NULL || c3 == NULL)
+	{
+		return -1;
+	}
+	
+	if((sameBorder2(c1, c2, pays1, pays2) == 0) && (sameBorder2(c1, c3, pays1, pays3) == 0) &&
+		(sameBorder2(c2, c3, pays2, pays3) == 0))
+	{
+		if(result == 1)
+		{
+			result = 0;
+		}
+	}
+	return result;
+}

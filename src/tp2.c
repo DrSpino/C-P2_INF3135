@@ -9,8 +9,7 @@
 #include "command.h"
 
 int main(int argc, char* argv[])
-{
-	
+{	
 	if(argc < 2 || argc > 6)
 	{
 		fprintf(stderr,"error: the number of arguments must be between 1 and 5 \n");
@@ -45,12 +44,24 @@ int main(int argc, char* argv[])
 				printf("no\n");
 			}
 		}
-		else{
+		else if(strcmp(argv[1], "--same-borders") == 0)
+		{
+			int result = sameBordersCommand(root, argv, argc);
+			if(result == 1)
+			{
+				printf("no\n");
+			}
+			else if(result == 0)
+			{
+				printf("yes\n");
+			}
+		}
+		else
+		{
 			fprintf(stderr,"error: command invalid \n");
 		}
 	}
-
+	
 	json_decref(root);
-
 	return 0;
 }
