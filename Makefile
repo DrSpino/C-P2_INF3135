@@ -23,4 +23,4 @@ $(TEST): src/readJson.o src/command.o src/display.o test/tp2_test.o
 test/tp2_test.o: src/readJson.h src/command.h src/display.h
 
 clean:
-	rm -rf src/*.o $(TEST) $(EXEC)
+	rm -rf src/*.o test/*.o $(TEST) $(EXEC)
