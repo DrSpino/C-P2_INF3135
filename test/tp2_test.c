@@ -17,6 +17,334 @@ int init_suite(void) { return 0; }
 int clean_suite(void) { return 0; }
 
 /************* Test case functions ****************/
+
+void display_test_true(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	char* argv[] = {"tp2","--region","americas","--show-capital"};
+	int argc = 4;
+	int index = 12;
+	
+	int result = display(root, index, argv, argc, 0);
+
+	CU_ASSERT_TRUE(result == 0);
+   
+    json_decref(root);
+}
+
+void display_test_false(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	char* argv[] = {"tp2","--region","americas","--show-capital"};
+	int argc = 4;
+	int index = -2;
+	
+	int result = display(root, index, argv, argc, 0);
+
+	CU_ASSERT_FALSE(result == 0);
+	CU_ASSERT_TRUE(result == -4);
+   
+    json_decref(root);
+}
+
+void display_test_erreur1(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	char* argv[] = {"tp2","--region","americas","--show-location"};
+	int argc = 4;
+	int index = 7;
+	
+	int result = display(root, index, argv, argc, 0);
+
+	CU_ASSERT_TRUE(result == -2);
+   
+    json_decref(root);
+}
+
+void display_test_erreur2(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	char* argv[] = {"tp2","--region"};
+	int argc = 2;
+	int index = 7;
+	
+	int result = display(root, index, argv, argc, 0);
+
+	CU_ASSERT_TRUE(result == -3);
+   
+    json_decref(root);
+}
+
+
+void display_test_null(void)
+{
+	char* argv[] = {"tp2","--region","americas","--show-capital"};
+	int argc = 4;
+	int index = 6;
+	
+	int result = display(NULL, index, argv, argc, 0);
+
+	CU_ASSERT_TRUE(result == -1);
+}
+
+
+void displayName_test_true(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,2);
+	int result = displayName(data, 0);
+
+	CU_ASSERT_TRUE(result == 0);
+   
+    json_decref(root);
+}
+
+void displayName_test_false(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,2);
+	int result = displayName(data, 0);
+
+	CU_ASSERT_FALSE(result == -1);
+   
+    json_decref(root);
+}
+
+void displayName_test_null(void)
+{
+	int result = displayName(NULL, 0);
+
+	CU_ASSERT_TRUE(result == -1);
+}
+
+void displayCode_test_true(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,4);
+	int result = displayCode(data, 0);
+
+	CU_ASSERT_TRUE(result == 0);
+   
+    json_decref(root);
+}
+
+void displayCode_test_false(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,4);
+	int result = displayCode(data, 0);
+
+	CU_ASSERT_FALSE(result == -1);
+   
+    json_decref(root);
+}
+
+void displayCode_test_null(void)
+{
+	int result = displayCode(NULL, 0);
+
+	CU_ASSERT_TRUE(result == -1);
+}
+
+void displayCapital_test_true(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,4);
+	int result = displayCapital(data, 0);
+
+	CU_ASSERT_TRUE(result == 0);
+   
+    json_decref(root);
+}
+
+void displayCapital_test_false(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,4);
+	int result = displayCapital(data, 0);
+
+	CU_ASSERT_FALSE(result == -1);
+   
+    json_decref(root);
+}
+
+void displayCapital_test_null(void)
+{
+	int result = displayCapital(NULL, 0);
+
+	CU_ASSERT_TRUE(result == -1);
+}
+
+void displayLanguages_test_true(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,8);
+	int result = displayLanguages(data, 0);
+
+	CU_ASSERT_TRUE(result == 0);
+   
+    json_decref(root);
+}
+
+void displayLanguages_test_false(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,8);
+	int result = displayLanguages(data, 0);
+
+	CU_ASSERT_FALSE(result == -1);
+   
+    json_decref(root);
+}
+
+void displayLanguages_test_null(void)
+{
+	int result = displayLanguages(NULL, 0);
+
+	CU_ASSERT_TRUE(result == -1);
+}
+
+void displayBorders_test_true(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,6);
+	int result = displayBorders(data, 0);
+
+	CU_ASSERT_TRUE(result == 0);
+   
+    json_decref(root);
+}
+
+void displayBorders_test_false(void)
+{
+	json_t *root;
+    char *text_root = "data/countries.json";
+    root = openJsonFile(text_root);
+   
+	json_t *data = getData(root,4);
+	int result = displayBorders(data, 0);
+
+	CU_ASSERT_FALSE(result == -1);
+   
+    json_decref(root);
+}
+
+void displayBorders_test_null(void)
+{
+	int result = displayBorders(NULL, 0);
+
+	CU_ASSERT_TRUE(result == -1);
+}
+
+
+void openJsonFile_test_true(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+   
+   CU_ASSERT_TRUE(json_is_array(root));
+   
+   json_decref(root);
+}
+
+void openJsonFile_test_false(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+   
+   CU_ASSERT_FALSE(json_is_object(root));
+   
+   json_decref(root);
+}
+
+void openJsonFile_test_null(void)
+{
+   json_t *root = openJsonFile(NULL);
+   
+   CU_ASSERT_PTR_NULL(root);
+   
+}
+
+void getData_test_true(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data = getData(root,2);
+
+   const char *name_string = getName(data);
+   const char *string_test = "Angola";
+
+   CU_ASSERT_TRUE(strcmp(string_test, name_string) == 0);
+   
+   json_decref(root);
+}
+
+void getData_test_false(void)
+{
+   json_t *root;
+   char *text_root = "data/countries.json";
+   root = openJsonFile(text_root);
+
+   json_t *data = getData(root,2);
+
+   const char *name_string = getName(data);
+   const char *string_test = "Andorra";
+
+   CU_ASSERT_FALSE(strcmp(string_test, name_string) == 0);
+   
+   json_decref(root);
+}
+
+void getData_test_null(void)
+{
+   json_t *data = getData(NULL,2);
+
+   CU_ASSERT_PTR_NULL(data);
+}
+
 void getName_test_true(void)
 {
    json_t *root;
@@ -336,7 +664,7 @@ void regionCommand_test_false(void)
    json_t *root;
    char *text_root = "data/countries.json";
    root = openJsonFile(text_root);
-   char* argv[] = {"","--region","ASIA"};
+   char* argv[] = {"tp2","--region","ASIA"};
    int result = regionCommand(root, argv, 3, -1);
 
    CU_ASSERT_TRUE(result == -2);
@@ -373,7 +701,33 @@ int main ( void )
    }
 
    /* add the tests to the suite */
-   if (  (NULL == CU_add_test(pSuite, "getName_test_true", getName_test_true)) ||
+   if (  (NULL == CU_add_test(pSuite, "display_test_true", display_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "display_test_false", display_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "display_test_null", display_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "display_test_erreur1", display_test_erreur1)) ||
+		 (NULL == CU_add_test(pSuite, "display_test_erreur2", display_test_erreur2)) ||
+		 (NULL == CU_add_test(pSuite, "displayName_test_true", displayName_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "displayName_test_false", displayName_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "displayName_test_null", displayName_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "displayCode_test_true", displayCode_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "displayCode_test_false", displayCode_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "displayCode_test_null", displayCode_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "displayCapital_test_true", displayCapital_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "displayCapital_test_false", displayCapital_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "displayCapital_test_null", displayCapital_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "displayLanguages_test_true", displayLanguages_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "displayLanguages_test_false", displayLanguages_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "displayLanguages_test_null", displayLanguages_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "displayBorders_test_true", displayBorders_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "displayBorders_test_false", displayBorders_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "displayBorders_test_null", displayBorders_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "openJsonFile_test_true", openJsonFile_test_true)) ||
+		 (NULL == CU_add_test(pSuite, "openJsonFile_test_false", openJsonFile_test_false)) ||
+		 (NULL == CU_add_test(pSuite, "openJsonFile_test_null", openJsonFile_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "getData_test_true", getData_test_true)) ||
+         (NULL == CU_add_test(pSuite, "getData_test_false", getData_test_false)) ||
+         (NULL == CU_add_test(pSuite, "getData_test_null", getData_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "getName_test_true", getName_test_true)) ||
          (NULL == CU_add_test(pSuite, "getName_test_false", getName_test_false)) ||
          (NULL == CU_add_test(pSuite, "getName_test_null", getName_test_null)) ||
          (NULL == CU_add_test(pSuite, "getCca3_test_true", getCca3_test_true)) ||

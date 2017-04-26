@@ -13,12 +13,12 @@
 #include "readJson.h"
 #include "command.h"
 
-void display(json_t *root, int index, char* argv[], int argc);
-void displayName(json_t *data);
-void displayCode(json_t *data);
-void displayCapital(json_t *data);
-void displayLanguages(json_t *data);
-void displayBorders(json_t *data);
+int display(json_t *root, int index, char* argv[], int argc, int affichage);
+int displayName(json_t *data, int affichage);
+int displayCode(json_t *data, int affichage);
+int displayCapital(json_t *data, int affichage);
+int displayLanguages(json_t *data, int affichage);
+int displayBorders(json_t *data, int affichage);
 
 #endif
 

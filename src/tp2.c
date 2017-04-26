@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 		if(strcmp(argv[1], "--country") == 0)
 		{
 			int result = countryCommand(root,argv[2]);
-			display(root, result, argv, argc);
+			display(root, result, argv, argc, 1);
 		}
 		else if(strcmp(argv[1], "--region") == 0)
 		{

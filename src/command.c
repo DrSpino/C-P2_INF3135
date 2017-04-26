@@ -67,7 +67,7 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 				const char *regionObtained = getRegion(data);
 					if(strcmp(region,regionObtained) == 0 && affichage == 0)
 					{
-						display(root, i, argv, argc);
+						display(root, i, argv, argc, 1);
 						printf("\n");
 					}
 			}
