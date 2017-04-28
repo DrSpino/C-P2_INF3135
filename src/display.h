@@ -4,14 +4,14 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <jansson.h>
-#include <string.h>
-#include <ctype.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <jansson.h>
+//#include <string.h>
+//#include <ctype.h>
 
 #include "readJson.h"
-#include "command.h"
+//#include "command.h"
 
 int display(json_t *root, int index, char* argv[], int argc, int affichage);
 int displayName(json_t *data, int affichage);

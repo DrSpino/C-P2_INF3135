@@ -13,10 +13,10 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "display.h"
-#include "command.h"
+//#include "display.h"
+//#include "command.h"
 
-json_t * openJsonFile(char *text_root);
+json_t * openJsonFile(char *text_root, int affichage);
 json_t * getData(json_t *root, int index);
 const char *getName(json_t *data);
 const char *getCca3(json_t *data);

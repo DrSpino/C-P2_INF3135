@@ -6,24 +6,29 @@
 
 #include "readJson.h"
 
-json_t *openJsonFile(char *text_root)
+json_t *openJsonFile(char *text_root, int affichage)
 {
 	json_error_t error;
 	json_t *root = json_load_file(text_root, 0, &error);
 
 	if(!root)
 	{
-		fprintf(stderr,"error: wrong path\n");
+		if(affichage)
+		{
+			fprintf(stderr,"error : wrong path\n");
+		}
 		return NULL;
 	}
 
 	if(!json_is_array(root))
 	{
-		fprintf(stderr,"error: root is not an array\n");
+		if(affichage)
+		{
+			fprintf(stderr,"error : root is not an array\n");
+		}
 		json_decref(root);
 		return NULL;
 	}
-
 	return root;
 }
 

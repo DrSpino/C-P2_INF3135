@@ -27,15 +27,18 @@ int display(json_t *root, int index, char* argv[], int argc, int affichage)
 				{
 					displayCapital(data,affichage);
 
-				}else if(strcmp(argv[i], "--show-languages") == 0)
+				}
+				else if(strcmp(argv[i], "--show-languages") == 0)
 				{
 					displayLanguages(data,affichage);
 
-				}else if(strcmp(argv[i], "--show-borders") == 0)
+				}
+				else if(strcmp(argv[i], "--show-borders") == 0)
 				{
 					displayBorders(data,affichage);
 
-				}else
+				}
+				else
 				{
 					if(affichage)
 					{
@@ -44,17 +47,18 @@ int display(json_t *root, int index, char* argv[], int argc, int affichage)
 					return -2;
 				}
 			}
-		}else
+		}
+		else
 		{
 			return -3;
 		}
-	}else
+	}
+	else
 	{
 		return -4;
 	}
 	return 0;
 }
-
 
 int displayName(json_t * data, int affichage)
 {
@@ -66,7 +70,8 @@ int displayName(json_t * data, int affichage)
 			printf("Name : %s \n", name);
 		}
 		return 0;
-	}else
+	}
+	else
 	{
 		return -1;
 	}	
@@ -82,7 +87,8 @@ int displayCode(json_t *data, int affichage)
 			printf("Code : %s\n", cca3);
 		}
 		return 0;
-	}else
+	}
+	else
 	{
 		return -1;
 	}
@@ -98,12 +104,12 @@ int displayCapital(json_t *data, int affichage)
 			printf("Capital : %s\n", capital);
 		}
 		return 0;
-	}else
+	}
+	else
 	{
 		return -1;
 	}
 }
-
 
 int displayLanguages(json_t *data, int affichage)
 {
@@ -132,7 +138,8 @@ int displayLanguages(json_t *data, int affichage)
 		}
 		
 		return 0;
-	}else
+	}
+	else
 	{
 		return -1;
 	}
@@ -166,7 +173,8 @@ int displayBorders(json_t *data, int affichage)
 		}
 
 		return 0;
-	}else
+	}
+	else
 	{
 		return -1;
 	}

@@ -4,11 +4,14 @@
 
 #include "command.h"
 
-int countryCommand(json_t *root, char *in)
+int countryCommand(json_t *root, char *in, int affichage)
 {
 	if(in == NULL)
 	{
-		fprintf(stderr, "error : country argument invalid\n");
+		if(affichage)
+		{
+			fprintf(stderr, "error : country argument invalid\n");
+		}
 		return -1;
 	}
 	
@@ -30,8 +33,11 @@ int countryCommand(json_t *root, char *in)
 			return i;
 		}
 	}
-
-	fprintf(stderr, "Country not found\n");
+	
+	if(affichage)
+	{
+		fprintf(stderr, "error : Country not found\n");
+	}
 	return -2;
 }
 
@@ -41,7 +47,10 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 
 	if(argv[2] == NULL)
 	{
-		fprintf(stderr,"error: the country code is not a string \n");
+		if(affichage)
+		{
+			fprintf(stderr,"error : the country code is not a string \n");
+		}
 		return -1;	
 	}
 		
@@ -57,7 +66,7 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 	{
 		if(strcmp(region, regionArray[j]) == 0)
 		{
-			regionObtainedValid--;
+			regionObtainedValid = 0;
 			int i;
 			/* display each data if data.getRegion equals region)*/
 			for(i = 0; i < (int)json_array_size(root); i++)
@@ -65,9 +74,9 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 				json_t *data;
 				data = getData(root,i);
 				const char *regionObtained = getRegion(data);
-					if(strcmp(region,regionObtained) == 0 && affichage == 0)
+					if(strcmp(region,regionObtained) == 0 && affichage)
 					{
-						display(root, i, argv, argc, 1);
+						display(root, i, argv, argc, affichage);
 						printf("\n");
 					}
 			}
@@ -77,7 +86,8 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 	if(regionObtainedValid)
 	{
 		return -2;	
-	}else
+	}
+	else
 	{
 		return 0;
 	}
@@ -90,33 +100,33 @@ int sameLanguageCommand(json_t *root, char* argv[],int argc)
 
 	if(argc < 4 || argc > 5)
 	{
-		fprintf(stderr,"number of argument invalid for command --same.\n");
+		fprintf(stderr,"error : number of argument invalid for command --same.\n");
 		return -1;
 	}
 
-	if(countryCommand(root, argv[2]) == -2){
+	if(countryCommand(root, argv[2], 1) == -2){
 		return -2;
 	}				
 	json_t *c1 = getLanguages(
 					getData(root, 
-						countryCommand(root, argv[2])));
+						countryCommand(root, argv[2], 1)));
 
 		
-	if(countryCommand(root, argv[3]) == -2){
+	if(countryCommand(root, argv[3], 1) == -2){
 		return -2;
 	}					
 	json_t *c2 = getLanguages(
 						getData(root, 
-							countryCommand(root, argv[3])));
+							countryCommand(root, argv[3], 1)));
 
 	if(argc == 5)
 	{
-		if(countryCommand(root, argv[4]) == -2){
+		if(countryCommand(root, argv[4], 1) == -2){
 			return -2;
 		}	
 		json_t *c3 = getLanguages(
 						getData(root, 
-							countryCommand(root, argv[4])));
+							countryCommand(root, argv[4], 1)));
 
 		result = sameLanguage3(c1, c2, c3);
 	}
@@ -219,30 +229,30 @@ int sameBordersCommand(json_t *root, char* argv[],int argc)
 	int result = 0; 
 	if(argc < 4 || argc > 5)
 	{
-		fprintf(stderr,"number of argument invalid for command --same.\n");
+		fprintf(stderr,"error : number of argument invalid for command --same.\n");
 		return -1;
 	}
 	
-	if(countryCommand(root, argv[2]) == -2 || countryCommand(root, argv[3]) == -2){
+	if(countryCommand(root, argv[2], 1) == -2 || countryCommand(root, argv[3], 1) == -2){
 		return -2;
 	}
-	json_t *c1_data = getData(root, countryCommand(root, argv[2]));
+	json_t *c1_data = getData(root, countryCommand(root, argv[2], 1));
 	json_t *c1 = getBorders(c1_data);
 	char pays1[3];
 	strcpy(pays1, getCca3(c1_data)); 
 	
-	json_t *c2_data = getData(root, countryCommand(root, argv[3]));
+	json_t *c2_data = getData(root, countryCommand(root, argv[3], 1));
 	json_t *c2 = getBorders(c2_data);
 	char pays2[3];
 	strcpy(pays2, getCca3(c2_data));
 	
 	if(argc == 5)
 	{
-		if(countryCommand(root, argv[4]) == -2)
+		if(countryCommand(root, argv[4], 1) == -2)
 		{
 			return -2;
 		}
-	    json_t *c3_data = getData(root, countryCommand(root, argv[4]));
+	    json_t *c3_data = getData(root, countryCommand(root, argv[4], 1));
 		json_t *c3 = getBorders(c3_data);
 		char pays3[3];
 		strcpy(pays3, getCca3(c3_data)); 
