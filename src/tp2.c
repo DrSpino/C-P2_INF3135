@@ -1,4 +1,9 @@
 /**
+*INF3135 - TP2
+*Auteur: Alexandre Lauzon LAUA31079401
+*Auteur: Francis Grondin GROF18029604
+*Auteur: Hicham Diouri DIOH21039602
+*
  * tp2.c est un fichier qui contient la fonction d'execution principale.
  **/
 
@@ -41,10 +46,14 @@ int main(int argc, char* argv[])
 		}
 		else if(strcmp(argv[1], "--same-language") == 0)
 		{
-			int result = sameLanguageCommand(root, argv, argc);
+			int result = sameLanguageCommand(root, argv, argc, 1);
 			if(result == 1)
 			{
 				printf("no\n");
+			}
+			else if(result == -1)
+			{
+				fprintf(stderr,"error : command --same requires 2 or 3 arguments\n");
 			}
 		}
 		else if(strcmp(argv[1], "--same-borders") == 0)
@@ -57,6 +66,10 @@ int main(int argc, char* argv[])
 			else if(result == 0)
 			{
 				printf("yes\n");
+			}
+			else if(result == -1)
+			{
+				fprintf(stderr,"error : command --same requires 2 or 3 arguments\n");
 			}
 		}
 		else

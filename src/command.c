@@ -34,7 +34,7 @@ int countryCommand(json_t *root, char *in, int display_test)
 			return i;
 		}
 	}
-	
+	 
 	if(display_test)
 	{
 		fprintf(stderr, "error : Country not found\n");
@@ -95,13 +95,12 @@ int regionCommand(json_t *root,  char* argv[], int argc, int display_test)
 			
 }
 
-int sameLanguageCommand(json_t *root, char* argv[],int argc)
+int sameLanguageCommand(json_t *root, char* argv[],int argc, int display_test)
 {
 	int result = 0;
 
 	if(argc < 4 || argc > 5)
 	{
-		fprintf(stderr,"error : number of argument invalid for command --same.\n");
 		return -1;
 	}
 
@@ -129,17 +128,17 @@ int sameLanguageCommand(json_t *root, char* argv[],int argc)
 						getData(root, 
 							countryCommand(root, argv[4], 1)));
 
-		result = sameLanguage3(c1, c2, c3);
+		result = sameLanguage3(c1, c2, c3, display_test);
 	}
 	else
 	{
-		result = sameLanguage2(c1, c2);
+		result = sameLanguage2(c1, c2, display_test);
 	}
 
 	return result;
 }
 
-int sameLanguage2(json_t *c1, json_t *c2)
+int sameLanguage2(json_t *c1, json_t *c2, int display_test)
 {
 	int result = 1;
 
@@ -159,8 +158,7 @@ int sameLanguage2(json_t *c1, json_t *c2)
 			if(strcmp(json_string_value(val1), json_string_value(val2)) == 0)
 			{
 				if(result == 1)
-				{
-					printf("yes %s",json_string_value(val1));
+				{					
 					result = 0;
 				}
 				else
@@ -171,15 +169,15 @@ int sameLanguage2(json_t *c1, json_t *c2)
 		}
 	}
 
-	if(result == 0)
+	if(result == 0 && display_test)
 	{
-		printf("\n");
+		printf("yes %s\n",json_string_value(val1));
 	}
-
+	
 	return result;
 }
 
-int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
+int sameLanguage3(json_t *c1, json_t *c2, json_t *c3, int display_test)
 {
 	int result = 1;
 
@@ -205,7 +203,6 @@ int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
 				{
 					if(result == 1)
 					{
-						printf("yes %s",json_string_value(val1));
 						result = 0;
 					}
 					else
@@ -217,9 +214,9 @@ int sameLanguage3(json_t *c1, json_t *c2, json_t *c3)
 		}
 	}
 
-	if(result == 0)
+	if(result == 0 && display_test)
 	{
-		printf("\n");
+		printf("yes %s\n",json_string_value(val1));
 	}
 
 	return result;
@@ -230,7 +227,6 @@ int sameBordersCommand(json_t *root, char* argv[],int argc)
 	int result = 0; 
 	if(argc < 4 || argc > 5)
 	{
-		fprintf(stderr,"error : number of argument invalid for command --same.\n");
 		return -1;
 	}
 	
