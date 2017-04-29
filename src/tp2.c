@@ -1,3 +1,7 @@
+/**
+ * tp2.c est un fichier qui contient la fonction d'execution principale.
+ **/
+
 //#include <stdlib.h>
 //#include <stdio.h>
 //#include <jansson.h>

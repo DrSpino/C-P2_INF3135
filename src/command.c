@@ -1,5 +1,5 @@
 /**
- * command.h est un fichier qui contient les fonctions de commandes.
+ * command.c est un fichier qui contient les fonctions de commandes.
  **/
 
 #include "command.h"

@@ -1,5 +1,5 @@
 /**
- * command.h est un fichier qui contient les fonctions de commandes.
+ * command.h est un fichier qui contient les entetes des fonctions de commandes.
  **/
 #ifndef COMMAND_H
 #define COMMAND_H
@@ -10,7 +10,7 @@
 //#include <string.h>
 //#include <ctype.h>
 
-//#include "readJson.h"
+#include "readJson.h"
 #include "display.h"
 
 //Fonction appelée lorsque --country est utilisé lors de l'exécution.

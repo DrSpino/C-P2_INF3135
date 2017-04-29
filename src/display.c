@@ -1,5 +1,5 @@
 /**
- * display.h est un fichier qui contient les fonctions d'affichage'.
+ * display.c est un fichier qui contient les fonctions d'affichage.
  **/
 
 #include "display.h"

@@ -1,3 +1,7 @@
+/**
+ * tp2_test.c est un fichier qui contient les test de tout le projet countries.
+**/
+ 
 //#include <stdlib.h>
 //#include <stdio.h>
 //#include <string.h>

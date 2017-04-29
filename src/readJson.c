@@ -1,5 +1,5 @@
 /**
- * readJson.h est un fichier qui contient :
+ * readJson.c est un fichier qui contient :
  * -toutes les fonctions qui permettent d'ouvrir le fichier Json
  * -les fonctions qui permettent d'extraire les valeurs du fichier Json
  **/
