@@ -730,6 +730,126 @@ void regionCommand_test_null(void)
    json_decref(root);
 }
 
+void sameLanguageCommand_test_null(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-language", NULL};
+	int result = sameLanguageCommand(root, argv, 3, 0);
+	
+	CU_ASSERT_TRUE(result == -1);
+	json_decref(root);
+}
+
+void sameLanguageCommand_test2_true(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-language","can","usa"};
+	int result = sameLanguageCommand(root, argv, 4, 0);
+	
+	CU_ASSERT_TRUE(result == 0);
+	json_decref(root);
+}
+
+void sameLanguageCommand_test2_false(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-language","fra","usa"};
+	int result = sameLanguageCommand(root, argv, 4, 0);
+	
+	CU_ASSERT_TRUE(result == 1);
+	json_decref(root);
+}
+
+void sameLanguageCommand_test3_true(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-language","can","usa","gbr"};
+	int result = sameLanguageCommand(root, argv, 5, 0);
+	
+	CU_ASSERT_TRUE(result == 0);
+	json_decref(root);
+}
+
+void sameLanguageCommand_test3_false(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-language","fra","usa", "ita"};
+	int result = sameLanguageCommand(root, argv, 5, 0);
+	
+	CU_ASSERT_TRUE(result == 1);
+	json_decref(root);
+}
+
+void sameBordersCommand_test_null(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-borders", NULL};
+	int result = sameBordersCommand(root, argv, 3);
+	
+	CU_ASSERT_TRUE(result == -1);
+	json_decref(root);
+}
+
+void sameBordersCommand_test2_true(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-borders","can","usa"};
+	int result = sameBordersCommand(root, argv, 4);
+	
+	CU_ASSERT_TRUE(result == 0);
+	json_decref(root);
+}
+
+void sameBordersCommand_test2_false(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-borders","can","mex"};
+	int result = sameBordersCommand(root, argv, 4);
+	
+	CU_ASSERT_TRUE(result == 1);
+	json_decref(root);
+}
+
+void sameBordersCommand_test3_true(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-borders","fra","che","ita"};
+	int result = sameBordersCommand(root, argv, 5);
+	
+	CU_ASSERT_TRUE(result == 0);
+	json_decref(root);
+}
+
+void sameBordersCommand_test3_false(void)
+{
+	json_t *root;
+	char *text_root = "data/countries.json";
+    root = openJsonFile(text_root, 1);
+	char* argv[] = {"", "--same-borders","can","usa","mex"};
+	int result = sameBordersCommand(root, argv, 5);
+	
+	CU_ASSERT_TRUE(result == 1);
+	json_decref(root);
+}
+
 int main ( void )
 {
    CU_pSuite pSuite = NULL;
@@ -799,7 +919,17 @@ int main ( void )
 		 (NULL == CU_add_test(pSuite, "regionCommand_test_true", regionCommand_test_true)) ||
 		 (NULL == CU_add_test(pSuite, "regionCommand_test_false", regionCommand_test_false)) ||
 		 (NULL == CU_add_test(pSuite, "regionCommand_test_erreur", regionCommand_test_erreur)) ||
-		 (NULL == CU_add_test(pSuite, "regionCommand_test_null", regionCommand_test_null))
+		 (NULL == CU_add_test(pSuite, "regionCommand_test_null", regionCommand_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "sameLanguageCommand_test_null", sameLanguageCommand_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "sameLanguageCommand_test2_true", sameLanguageCommand_test2_true)) ||
+		 (NULL == CU_add_test(pSuite, "sameLanguageCommand_test2_false", sameLanguageCommand_test2_false)) ||
+		 (NULL == CU_add_test(pSuite, "sameLanguageCommand_test3_true", sameLanguageCommand_test3_true)) ||
+		 (NULL == CU_add_test(pSuite, "sameLanguageCommand_test3_false", sameLanguageCommand_test3_false)) ||
+		 (NULL == CU_add_test(pSuite, "sameBordersCommand_test_null", sameBordersCommand_test_null)) ||
+		 (NULL == CU_add_test(pSuite, "sameBordersCommand_test2_true", sameBordersCommand_test2_true)) ||
+		 (NULL == CU_add_test(pSuite, "sameBordersCommand_test2_false", sameBordersCommand_test2_false)) ||
+		 (NULL == CU_add_test(pSuite, "sameBordersCommand_test3_true", sameBordersCommand_test3_true)) ||
+		 (NULL == CU_add_test(pSuite, "sameBordersCommand_test3_false", sameBordersCommand_test3_false))
 	  )
    {
       CU_cleanup_registry();
@@ -811,4 +941,4 @@ int main ( void )
    CU_basic_run_tests();
    CU_cleanup_registry();
    return CU_get_error();
-}
+} 
