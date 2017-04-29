@@ -1,10 +1,10 @@
 /**
- * display.c est un fichier qui contient les fonctions d'affichage.
+ * display.c est un fichier qui contient les fonctions d'display_test.
  **/
 
 #include "display.h"
 
-int display(json_t *root, int index, char* argv[], int argc, int affichage)
+int display(json_t *root, int index, char* argv[], int argc, int display_test)
 {
 	if(root == NULL){
 		return -1;
@@ -15,8 +15,8 @@ int display(json_t *root, int index, char* argv[], int argc, int affichage)
 		json_t *data;
 		data = getData(root, index);
 
-		displayName(data, affichage);
-		displayCode(data, affichage);
+		displayName(data, display_test);
+		displayCode(data, display_test);
 
 		if (argc > 2)
 		{
@@ -25,22 +25,22 @@ int display(json_t *root, int index, char* argv[], int argc, int affichage)
 			{
 				if(strcmp(argv[i], "--show-capital") == 0)
 				{
-					displayCapital(data,affichage);
+					displayCapital(data,display_test);
 
 				}
 				else if(strcmp(argv[i], "--show-languages") == 0)
 				{
-					displayLanguages(data,affichage);
+					displayLanguages(data,display_test);
 
 				}
 				else if(strcmp(argv[i], "--show-borders") == 0)
 				{
-					displayBorders(data,affichage);
+					displayBorders(data,display_test);
 
 				}
 				else
 				{
-					if(affichage)
+					if(display_test)
 					{
 						printf("arg %i invalid !\n", i);
 					}
@@ -60,12 +60,12 @@ int display(json_t *root, int index, char* argv[], int argc, int affichage)
 	return 0;
 }
 
-int displayName(json_t * data, int affichage)
+int displayName(json_t * data, int display_test)
 {
 	const char *name = getName(data);
 	if (name != NULL)
 	{
-		if(affichage)
+		if(display_test)
 		{
 			printf("Name : %s \n", name);
 		}
@@ -77,12 +77,12 @@ int displayName(json_t * data, int affichage)
 	}	
 }
 
-int displayCode(json_t *data, int affichage)
+int displayCode(json_t *data, int display_test)
 {
 	const char *cca3 = getCca3(data);
 	if (cca3 != NULL)
 	{
-		if(affichage)
+		if(display_test)
 		{
 			printf("Code : %s\n", cca3);
 		}
@@ -94,12 +94,12 @@ int displayCode(json_t *data, int affichage)
 	}
 }
 
-int displayCapital(json_t *data, int affichage)
+int displayCapital(json_t *data, int display_test)
 {
 	const char *capital = getCapital(data);
 	if (capital != NULL)
 	{
-		if(affichage)
+		if(display_test)
 		{
 			printf("Capital : %s\n", capital);
 		}
@@ -111,9 +111,9 @@ int displayCapital(json_t *data, int affichage)
 	}
 }
 
-int displayLanguages(json_t *data, int affichage)
+int displayLanguages(json_t *data, int display_test)
 {
-	if(affichage)
+	if(display_test)
 	{
 		printf("Languages : ");	
 	}
@@ -126,13 +126,13 @@ int displayLanguages(json_t *data, int affichage)
 		json_t *value;
 		json_object_foreach(languages, key, value) 
 		{
-			if(affichage)
+			if(display_test)
 			{
 				printf("%s, ",json_string_value(value));	
 			}
 		}
 	
-		if(affichage)
+		if(display_test)
 		{
 			printf("\n");
 		}
@@ -145,9 +145,9 @@ int displayLanguages(json_t *data, int affichage)
 	}
 }
 
-int displayBorders(json_t *data, int affichage)
+int displayBorders(json_t *data, int display_test)
 {
-	if(affichage)
+	if(display_test)
 	{
 		printf("Borders : ");
 	}
@@ -161,13 +161,13 @@ int displayBorders(json_t *data, int affichage)
 			int i;
 			for (i = 0; i < (int)json_array_size(borders); i++)
 			{
-				if(affichage)
+				if(display_test)
 				{
 					printf("%s, ",json_string_value(json_array_get(borders,i)));
 				}
 			}
 		}
-		if(affichage)
+		if(display_test)
 		{
 			printf("\n");
 		}

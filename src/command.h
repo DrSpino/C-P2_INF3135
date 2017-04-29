@@ -4,20 +4,20 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <jansson.h>
-//#include <string.h>
-//#include <ctype.h>
+
+#include <stdio.h>
+#include <jansson.h>
+#include <string.h>
+#include <ctype.h>
 
 #include "readJson.h"
 #include "display.h"
 
 //Fonction appelée lorsque --country est utilisé lors de l'exécution.
-int countryCommand(json_t *root, char *in, int affichage);
+int countryCommand(json_t *root, char *in, int display_test);
 
 //Fonction appelée par le main lorsque --region est utilisé lors de l'exécution.
-int regionCommand(json_t *root,  char* argv[], int argc, int affichage);
+int regionCommand(json_t *root,  char* argv[], int argc, int display_test);
 
 //Fonction appelée par le main lorsque --same-language est utilisé lors de l'exécution.
 int sameLanguageCommand(json_t *root, char* argv[], int argc);

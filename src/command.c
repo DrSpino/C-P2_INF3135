@@ -4,23 +4,24 @@
 
 #include "command.h"
 
-int countryCommand(json_t *root, char *in, int affichage)
+int countryCommand(json_t *root, char *in, int display_test)
 {
 	if(in == NULL)
 	{
-		if(affichage)
+		if(display_test)
 		{
 			fprintf(stderr, "error : country argument invalid\n");
 		}
 		return -1;
 	}
 	
-	char *s = in;
-  	while (*s) 
+	char code[4];
+	strcpy(code,in);
+	int j;
+	for(j = 0; j < 4 ; j++)
 	{
-    	*s = toupper((unsigned char) *s);
-    	s++;
-  	}
+		code[j] = toupper(code[j]);
+	}
   	
 	int i;
 	for(i = 0; i < (int)json_array_size(root); i++)
@@ -28,26 +29,26 @@ int countryCommand(json_t *root, char *in, int affichage)
 		json_t *data = getData(root,i);
 		const char *cca3 = getCca3(data);
 
-		if (cca3 != NULL && strcmp(in, cca3) == 0)
+		if (cca3 != NULL && strcmp(code, cca3) == 0)
 		{
 			return i;
 		}
 	}
 	
-	if(affichage)
+	if(display_test)
 	{
 		fprintf(stderr, "error : Country not found\n");
 	}
 	return -2;
 }
 
-int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
+int regionCommand(json_t *root,  char* argv[], int argc, int display_test)
 {
 	char *regionArray[] = {"Africa","Americas","Asia","Europe","Oceania"};
 
 	if(argv[2] == NULL)
 	{
-		if(affichage)
+		if(display_test)
 		{
 			fprintf(stderr,"error : the country code is not a string \n");
 		}
@@ -74,9 +75,9 @@ int regionCommand(json_t *root,  char* argv[], int argc, int affichage)
 				json_t *data;
 				data = getData(root,i);
 				const char *regionObtained = getRegion(data);
-					if(strcmp(region,regionObtained) == 0 && affichage)
+					if(strcmp(region,regionObtained) == 0 && display_test)
 					{
-						display(root, i, argv, argc, affichage);
+						display(root, i, argv, argc, display_test);
 						printf("\n");
 					}
 			}

@@ -7,17 +7,14 @@
 #ifndef READJSON_H
 #define READJSON_H
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <jansson.h>
-#include <string.h>
-#include <ctype.h>
 
 #include "display.h"
 #include "command.h"
 
 //Fonction appelée pour ouvrir un fichier Json.
-json_t * openJsonFile(char *text_root, int affichage);
+json_t * openJsonFile(char *text_root, int display_test);
 
 //Fonction appelée pour obtenir un objet contenant les attributs du country a l'index.
 json_t * getData(json_t *root, int index);
